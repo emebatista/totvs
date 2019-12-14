@@ -8,7 +8,7 @@
 #DEFINE CRLF Chr(13)+Chr(10)
 
 /*/{Protheus.doc} QSQL
-FunÁ„o para abrir executar consultas SQL no banco de dados
+Fun√ß√£o para abrir executar consultas SQL no banco de dados
 @author Emerson D Batista
 @since 11/12/2017
 @version 1.0
@@ -16,6 +16,7 @@ FunÁ„o para abrir executar consultas SQL no banco de dados
 
 User Function AfterLogin() 
 	SetKey( VK_F11, { || u_qsql() } )
+	SetKey( K_SH_F11, { || u_qsql() } )
 Return nil
 
 User Function QSQL(cFraseAuto,_aPosicoes,_oJanela)
@@ -74,7 +75,7 @@ User Function QSQL(cFraseAuto,_aPosicoes,_oJanela)
 	cRPO2:= cRPO
 	If RAT("/",cRPO)>0
 		nPos := RAT("/",cRPO)
-		cRPO := Space(30)+"Data PromoÁao RPO: "+DTOC(STOD(Substr(cRPO2,nPos+1,8)))
+		cRPO := Space(30)+"Data Promo√ßao RPO: "+DTOC(STOD(Substr(cRPO2,nPos+1,8)))
 		cRPO := cRPO + " Hora: "+Substr(cRPO2,nPos+9,2)+":"+Substr(cRPO2,nPos+11,2)+":"+Substr(cRPO2,nPos+13,2)
 	EndIf
 
@@ -94,7 +95,7 @@ User Function QSQL(cFraseAuto,_aPosicoes,_oJanela)
 		nHandle := FT_FUse(AllTrim(c_Pth))
 
 		If nHandle == -1
-			MessageBox('N„o foi possÌvel ler o arquivo ' + c_Pth , 'AVISO', 16)
+			MessageBox('N√£o foi poss√≠vel ler o arquivo ' + c_Pth , 'AVISO', 16)
 		Else
 
 			FT_FGoTop()
@@ -130,7 +131,7 @@ User Function QSQL(cFraseAuto,_aPosicoes,_oJanela)
 
 		@ 010+09*02 ,525 BUTTON "Abrir"   			Size 55,10 action Open()     	Object btnAbrir
 		@ 010+09*03 ,525 BUTTON "Salvar"   			Size 55,10 action Save()     	Object btnAbrir
-		@ 010+09*04 ,525 BUTTON "Exec.FÛrmula"   	Size 55,10 action Terminal()    Object btnAbrir
+		@ 010+09*04 ,525 BUTTON "Exec.F√≥rmula"   	Size 55,10 action Terminal()    Object btnAbrir
 		@ 010+09*05 ,525 BUTTON "Editar Tabela"    	Size 55,10 action fDicio()    	Object btnDicio
 		@ 010+09*06 ,525 BUTTON "Historico"			Size 55,10 action ShwHst(0)	 	Object btnHist
 		@ 010+09*07 ,525 BUTTON "Limpa Hist"		Size 55,10 action ShwHst(1)	 	Object btnHist
@@ -220,7 +221,7 @@ Static Function fRun(_aPosicoes,_oJanela)
 
 	//	If File(c_Pth)
 	//		If FErase(c_Pth,,.T.) = -1
-	//			MessageBox('N„o foi possÌvel excluir o arquivo ' + c_Pth , 'AVISO', 16)
+	//			MessageBox('N√£o foi poss√≠vel excluir o arquivo ' + c_Pth , 'AVISO', 16)
 	//		Endif
 	//	Endif
 	//	
@@ -229,11 +230,11 @@ Static Function fRun(_aPosicoes,_oJanela)
 	If _aPosicoes == nil
 		MemoWrite(c_Pth,_cQueryTxt)
 		cBkpSql := _cQueryTxt
-		_cQueryTxt := Ltrim(StrTran(_cQueryTxt,CRLF,CRLF+"ß$@"))
+		_cQueryTxt := Ltrim(StrTran(_cQueryTxt,CRLF,CRLF+"¬ß$@"))
 		a_Qry := StrToArray(_cQueryTxt,CRLF)
 		n_PsBlE := Len(a_Qry)
 		For _i := 1 to Len(a_Qry)
-			a_Qry[_i] := StrTran(a_Qry[_i],"ß$@","")
+			a_Qry[_i] := StrTran(a_Qry[_i],"¬ß$@","")
 			if n_TPos < n_Pos
 				If AllTrim(a_Qry[_i]) = ''
 					n_PsBlB := _i
@@ -479,7 +480,7 @@ Static Function fExport()
 		Alert("Tabela Vazia")
 		Return nil
 	EndIf
-	††
+	¬†¬†
 	oExcel := FWMSEXCEL():New()
 	oExcel:AddworkSheet("Dados")
 	oExcel:AddTable ("Dados","Planilha")
@@ -487,7 +488,7 @@ Static Function fExport()
 	DbSelectArea(_cMyAlias)
 	nFields := FCount()
 	for j:=1 to nFields
-		††††   oExcel:AddColumn("Dados","Planilha",FieldName(j),1,1)
+		¬†¬†¬†¬†   oExcel:AddColumn("Dados","Planilha",FieldName(j),1,1)
 	next
 
 	DbSelectArea(_cMyAlias)
@@ -590,17 +591,17 @@ Static Function Terminal()
 	IF !MsgYesNo("Confirma Execblock?")
 		Return nil
 	EndIf
-	††
-	††††cExpr := _cQueryTxt
-	†
-	††††If !Empty(cExpr)
-	††††††††Begin Sequence††† 
-	††††††††	nReturn := &cExpr
-	††††††††Return .T.
-	††††††††End Sequence
-	††††EndIf
-	†
-	††††ErrorBlock(oError)
+	¬†¬†
+	¬†¬†¬†¬†cExpr := _cQueryTxt
+	¬†
+	¬†¬†¬†¬†If !Empty(cExpr)
+	¬†¬†¬†¬†¬†¬†¬†¬†Begin Sequence¬†¬†¬† 
+	¬†¬†¬†¬†¬†¬†¬†¬†	nReturn := &cExpr
+	¬†¬†¬†¬†¬†¬†¬†¬†Return .T.
+	¬†¬†¬†¬†¬†¬†¬†¬†End Sequence
+	¬†¬†¬†¬†EndIf
+	¬†
+	¬†¬†¬†¬†ErrorBlock(oError)
 
 Return .F.
 
@@ -611,11 +612,11 @@ Static Function fPowerShell()
 	IF !MsgYesNo("Confirma Execucao?")
 		Return nil
 	EndIf
-	††
-	††††cExpr := _cQueryTxt
-	†
-	††††If !Empty(cExpr)
-	††††††††Begin Sequence††† 
+	¬†¬†
+	¬†¬†¬†¬†cExpr := _cQueryTxt
+	¬†
+	¬†¬†¬†¬†If !Empty(cExpr)
+	¬†¬†¬†¬†¬†¬†¬†¬†Begin Sequence¬†¬†¬† 
 
 	lOk := .t.
 
@@ -624,15 +625,15 @@ Static Function fPowerShell()
 	IF lOk
 		MsgInfo("Executado com sucesso!")
 	Else 
-		Alert("Erro na ExecuÁ„o")
+		Alert("Erro na Execu√ß√£o")
 	EndIf
 
 
-	††††††††Return .T.
-	††††††††End Sequence
-	††††EndIf
-	†
-	††††ErrorBlock(oError)
+	¬†¬†¬†¬†¬†¬†¬†¬†Return .T.
+	¬†¬†¬†¬†¬†¬†¬†¬†End Sequence
+	¬†¬†¬†¬†EndIf
+	¬†
+	¬†¬†¬†¬†ErrorBlock(oError)
 
 Return .F.
 
@@ -646,7 +647,7 @@ Static Function GrvHst(c_Qry)
 		nHandle := FT_FUse(AllTrim(c_Hst))
 
 		If nHandle == -1
-			MessageBox('N„o foi possÌvel ler o arquivo ' + c_Hst , 'AVISO', 16)
+			MessageBox('N√£o foi poss√≠vel ler o arquivo ' + c_Hst , 'AVISO', 16)
 		Else
 
 			FT_FGoTop()
@@ -675,7 +676,7 @@ Static function ShwHst(nPar)
 
 	If nPar == 1 .AND. MsgYesNo("Limpa Historico?")
 		fErase(AllTrim(c_Pth))
-		Alert("HistÛrico ExcluÌdo! "+c_Hst)
+		Alert("Hist√≥rico Exclu√≠do! "+c_Hst)
 		Return Nil
 	EndIF
 
@@ -683,7 +684,7 @@ Static function ShwHst(nPar)
 		nHandle := FT_FUse(AllTrim(c_Hst))
 
 		If nHandle == -1
-			MessageBox('N„o foi possÌvel ler o arquivo ' + c_Hst , 'AVISO', 16)
+			MessageBox('N√£o foi poss√≠vel ler o arquivo ' + c_Hst , 'AVISO', 16)
 		Else
 
 			FT_FGoTop()
@@ -860,7 +861,7 @@ User Function Promove()
 		IF lOk
 			MsgInfo("Executado com sucesso!")
 		Else 
-			Alert("Erro na ExecuÁ„o")
+			Alert("Erro na Execu√ß√£o")
 		EndIf
 	EndIf
 
@@ -900,7 +901,7 @@ Static Function fCopiar()
 	If lResult
 		MsgInfo("Executado Com Sucesso!")
 	Else
-		Alert("Falha de ExecuÁ„o!")
+		Alert("Falha de Execu√ß√£o!")
 	EndIF
 
 Return nil
@@ -968,7 +969,7 @@ Return nil
 
 
 // --------------------------------------------------------------------------------
-// Executada a partir da funÁ„o lEditCol(MsGetDados), est· funÁ„o permite a ediÁ„o
+// Executada a partir da fun√ß√£o lEditCol(MsGetDados), est√° fun√ß√£o permite a edi√ß√£o
 // do campos no Grid
 STATIC Function fSduEditCel(oBrowse,nCol,lReadOnly,aStruct)
 	Local oDlg
@@ -1126,24 +1127,24 @@ Return
 // Mostra uma tela de help com as funcionalidades
 static function fHelp()
 	MSGInfo(/*"<h1>Help QSQL</h1>" +*/; 
-	"<h2>Teclas r·pidas do QSQL</h2>" +;
+	"<h2>Teclas r√°pidas do QSQL</h2>" +;
 	"<b>F5:</b> Executa o comando SQL." +;
 	"<br><b>CTRL + seta para baixo:</b> Abre a lista de campos." +;
-	"<h2>FunÁıes (botıes) do QSQL</h2>" +;
+	"<h2>Fun√ß√µes (bot√µes) do QSQL</h2>" +;
 	"<b>Executa:</b> Executa o comando SQL." +;
 	"<br><b>Exporta XML:</b> Exporta o resultado da consulta no formato XML (pode ser importado no Excel)." +;
-	"<br><b>Abrir:</b> Abre qualquer arquivo para ediÁ„o (local ou remoto). ⁄til para editar arquivos de menus, alÈm de scripts SQL." +;
-	"<br><b>Salvar:</b> Salva o texto que est· na tela em um arquivo. Pode ser qualquer extens„o, inclusive menus." +;
-	"<br><b>Exec. FÛrmula:</b> Executa uma ou mais user functions ou scripts em ADVPL, em sequencia, separados por vÌgula(,)." +;
-	"<br><b>Editar Tabela:</b> Permite editar (inc./alt./exc./recuperaÁ„o) das linhas (registros) de uma tabela aberta (SX ou DB)." +;
-	"<br><b>HistÛrico:</b> Carrega o histÛrico de comandos." +;
-	"<br><b>Limpa Hist.:</b> Limpar o histÛrico, caso necess·rio." +;
-	"<br><b>Mudar RPO:</b> Muda o caminho do RPO no .ini (appserver.ini), permitindo mudanÁa a quente. Apenas em Windows." +;
-	"<br><b>Copia RPO:</b> Faz uma cÛpia do RPO para outra pasta, facilitando a criaÁ„o de cÛpias de seguranÁa." +;
+	"<br><b>Abrir:</b> Abre qualquer arquivo para edi√ß√£o (local ou remoto). √ötil para editar arquivos de menus, al√©m de scripts SQL." +;
+	"<br><b>Salvar:</b> Salva o texto que est√° na tela em um arquivo. Pode ser qualquer extens√£o, inclusive menus." +;
+	"<br><b>Exec. F√≥rmula:</b> Executa uma ou mais user functions ou scripts em ADVPL, em sequencia, separados por v√≠gula(,)." +;
+	"<br><b>Editar Tabela:</b> Permite editar (inc./alt./exc./recupera√ß√£o) das linhas (registros) de uma tabela aberta (SX ou DB)." +;
+	"<br><b>Hist√≥rico:</b> Carrega o hist√≥rico de comandos." +;
+	"<br><b>Limpa Hist.:</b> Limpar o hist√≥rico, caso necess√°rio." +;
+	"<br><b>Mudar RPO:</b> Muda o caminho do RPO no .ini (appserver.ini), permitindo mudan√ßa a quente. Apenas em Windows." +;
+	"<br><b>Copia RPO:</b> Faz uma c√≥pia do RPO para outra pasta, facilitando a cria√ß√£o de c√≥pias de seguran√ßa." +;
 	"<br><b>Comando no Srv.:</b> Executa um comando no servidor. Exemplo: reiniciar TSS, executar .BAT, etc." +;
-	"<br><b>Copia Arquvos:</b> Copia arquivos da pasta local para o servidor ou vice versa. Exemplo: cÛpia de patches ou substituiÁ„o de menu." +;
+	"<br><b>Copia Arquvos:</b> Copia arquivos da pasta local para o servidor ou vice versa. Exemplo: c√≥pia de patches ou substitui√ß√£o de menu." +;
 	"<br><b>Help:</b> Mostra esta tela de help." +;
-	"<br><b>Sair:</b> Fecha este utilit·rio." +;
+	"<br><b>Sair:</b> Fecha este utilit√°rio." +;
 	"";
 	)
 return
@@ -1157,22 +1158,22 @@ User function SqlFile()
 	Local c_Pst := "\sqlfile\"
 
 	If ! FWMakeDir(c_Pst,.T.)
-		Aviso("AtenÁ„o","InconsistÍncia ao criar diretorio " + c_Pst,{"Ok"})
+		Aviso("Aten√ß√£o","Inconsist√™ncia ao criar diretorio " + c_Pst,{"Ok"})
 		Return
 	Endif
 	//
 	//6 - File
-	//[2] : DescriÁ„o
+	//[2] : Descri√ß√£o
 	//[3] : String contendo o inicializador do campo
 	//[4] : String contendo a Picture do campo
-	//[5] : String contendo a validaÁ„o
-	//[6] : String contendo a validaÁ„o When
+	//[5] : String contendo a valida√ß√£o
+	//[6] : String contendo a valida√ß√£o When
 	//[7] : Tamanho do MsGet
-	//[8] : Flag .T./.F. Par‚metro ObrigatÛrio ?
+	//[8] : Flag .T./.F. Par√¢metro Obrigat√≥rio ?
 	//[9] : Texto contendo os tipos de arquivo
 	//Ex.: &quot;Arquivos .CSV |*.CSV&quot;
-	//[10]: DiretÛrio inicial do CGETFILE()
-	//[11]: Par‚metros do CGETFILE()
+	//[10]: Diret√≥rio inicial do CGETFILE()
+	//[11]: Par√¢metros do CGETFILE()
 
 	If GetRemoteType() = 2
 		aAdd( aPergs ,{6,"Arquivo"	,	aRet[1],"",'.T.','.F.',80,.T.,"Arquivos .TXT |*.TXT","SERVIDOR/sqlfile/",4})
@@ -1196,7 +1197,7 @@ User function SqlFile()
 				nHandle := FT_FUse(AllTrim(c_Arq))
 
 				If nHandle == -1
-					MessageBox('N„o foi possÌvel ler o arquivo ' + c_Arq , 'AVISO', 16)
+					MessageBox('N√£o foi poss√≠vel ler o arquivo ' + c_Arq , 'AVISO', 16)
 				Else
 					FT_FGoTop()
 					While ! FT_FEof()
@@ -1208,7 +1209,7 @@ User function SqlFile()
 
 				U_QSQL(c_Sql)
 			Else
-				MessageBox('O arquivo n„o foi encontrado: ' + c_Arq , 'AVISO', 16)
+				MessageBox('O arquivo n√£o foi encontrado: ' + c_Arq , 'AVISO', 16)
 			Endif
 		Endif
 	Endif
@@ -1222,12 +1223,12 @@ static FUNCTION NoAcento(cString)
 	Local nX     := 0 
 	Local nY     := 0
 	Local cVogal := "aeiouAEIOU"
-	Local cAgudo := "·ÈÌÛ˙"+"¡…Õ”⁄"
-	Local cCircu := "‚ÍÓÙ˚"+"¬ Œ‘€"
-	Local cTrema := "‰ÎÔˆ¸"+"ƒÀœ÷‹"
-	Local cCrase := "‡ËÏÚ˘"+"¿»Ã“Ÿ" 
-	Local cTio   := "„ı√’"
-	Local cCecid := "Á«"
+	Local cAgudo := "√°√©√≠√≥√∫"+"√Å√â√ç√ì√ö"
+	Local cCircu := "√¢√™√Æ√¥√ª"+"√Ç√ä√é√î√õ"
+	Local cTrema := "√§√´√Ø√∂√º"+"√Ñ√ã√è√ñ√ú"
+	Local cCrase := "√†√®√¨√≤√π"+"√Ä√à√å√í√ô" 
+	Local cTio   := "√£√µ√É√ï"
+	Local cCecid := "√ß√á"
 	Local cMaior := "&lt;"
 	Local cMenor := "&gt;"
 
